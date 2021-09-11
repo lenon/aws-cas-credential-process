@@ -57,7 +57,7 @@ func (s *TestSuite) TestFindPrincipalAndRoleToAssumeNotFound() {
 	samlresp, _ := decodeSAMLFromBase64(s.base64sample)
 	principal, role, err := samlresp.findPrincipalAndRoleToAssume("other")
 
-	s.EqualError(err, "could not find AWS principal and role name")
+	s.EqualError(err, "could not find AWS principal and role other")
 	s.Empty(principal)
 	s.Empty(role)
 }

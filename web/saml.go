@@ -4,6 +4,7 @@ import (
 	"encoding/base64"
 	"encoding/xml"
 	"errors"
+	"fmt"
 
 	"github.com/aws/aws-sdk-go/aws/arn"
 )
@@ -90,5 +91,5 @@ func (r *samlResponse) findPrincipalAndRoleToAssume(roleName string) (string, st
 		}
 	}
 
-	return "", "", errors.New("could not find AWS principal and role name")
+	return "", "", errors.New(fmt.Sprintf("could not find AWS principal and role %s", roleName))
 }
