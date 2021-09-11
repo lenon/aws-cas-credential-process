@@ -46,7 +46,7 @@ func (s *TestSuite) TestGetError() {
 	username, err := s.credentials.Get("username")
 
 	s.Empty(username)
-	s.Error(err, "username not found")
+	s.EqualError(err, "username not found")
 	s.keyringMock.AssertExpectations(s.T())
 }
 
@@ -66,7 +66,7 @@ func (s *TestSuite) TestGetWithinContextError() {
 	value, err := s.credentials.GetWithinContext("MyRole", "AccessKeyId")
 
 	s.Empty(value)
-	s.Error(err, "AccessKeyId not found")
+	s.EqualError(err, "myrole-AccessKeyId not found")
 	s.keyringMock.AssertExpectations(s.T())
 }
 
@@ -96,7 +96,7 @@ func (s *TestSuite) TestSetError() {
 
 	err := s.credentials.Set("username", "alice")
 
-	s.Error(err, "something went wrong")
+	s.EqualError(err, "something went wrong")
 	s.keyringMock.AssertExpectations(s.T())
 }
 
@@ -114,7 +114,7 @@ func (s *TestSuite) TestSetWithinContextError() {
 
 	err := s.credentials.SetWithinContext("MyRole", "AccessKeyId", "foobar")
 
-	s.Error(err, "something went wrong")
+	s.EqualError(err, "something went wrong")
 	s.keyringMock.AssertExpectations(s.T())
 }
 
