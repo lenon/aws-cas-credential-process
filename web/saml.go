@@ -36,7 +36,7 @@ type samlAttributeValue struct {
 	Value   string   `xml:",chardata"`
 }
 
-func decodeFromBase64(base64str string) (*samlResponse, error) {
+func decodeSAMLFromBase64(base64str string) (*samlResponse, error) {
 	decodedStr, err := base64.StdEncoding.DecodeString(base64str)
 	if err != nil {
 		return nil, err
