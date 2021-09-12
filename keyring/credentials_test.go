@@ -9,21 +9,21 @@ import (
 	"github.com/stretchr/testify/suite"
 )
 
-type keyringMock struct {
+type backendMock struct {
 	mock.Mock
 }
 
-func (m *keyringMock) Get(service, key string) (string, error) {
+func (m *backendMock) Get(service, key string) (string, error) {
 	args := m.Called(service, key)
 	return args.String(0), args.Error(1)
 }
 
-func (m *keyringMock) Set(service, key, value string) error {
+func (m *backendMock) Set(service, key, value string) error {
 	args := m.Called(service, key, value)
 	return args.Error(0)
 }
 
-func (m *keyringMock) Delete(service, key string) error {
+func (m *backendMock) Delete(service, key string) error {
 	args := m.Called(service, key)
 	return args.Error(0)
 }
@@ -31,13 +31,13 @@ func (m *keyringMock) Delete(service, key string) error {
 type TestSuite struct {
 	suite.Suite
 
-	keyringMock *keyringMock
-	credentials *Credentials
+	keyringMock *backendMock
+	credentials *Keyring
 }
 
 func (s *TestSuite) SetupTest() {
-	s.keyringMock = new(keyringMock)
-	s.credentials = &Credentials{keyring: s.keyringMock}
+	s.keyringMock = new(backendMock)
+	s.credentials = &Keyring{backend: s.keyringMock}
 }
 
 func (s *TestSuite) TestGetError() {
