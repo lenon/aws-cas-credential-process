@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	serviceKey         = "aws-web-sso-helper"
+	serviceKey         = "aws-cas-credential-process"
 	usernameKey        = "username"
 	passwordKey        = "password"
 	accessKeyIdKey     = "AccessKeyId"
