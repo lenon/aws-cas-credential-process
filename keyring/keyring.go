@@ -1,4 +1,4 @@
-package credentials
+package keyring
 
 import gokr "github.com/zalando/go-keyring"
 
