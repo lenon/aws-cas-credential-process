@@ -21,32 +21,32 @@ func (s *TestSuite) SetupTest() {
 	s.base64sample = string(data)
 }
 
-func (s *TestSuite) TestDecodeSAMLResponseError() {
-	samlresp, err := decodeSAMLResponse("invalid base 64")
+func (s *TestSuite) TestDecodeError() {
+	response, err := Decode("invalid base 64")
 
 	s.Error(err)
 	s.Contains(err.Error(), "illegal base64 data")
-	s.Nil(samlresp)
+	s.Nil(response)
 }
 
-func (s *TestSuite) TestDecodeSAMLResponseSuccess() {
-	samlresp, err := decodeSAMLResponse(s.base64sample)
+func (s *TestSuite) TestDecodeSuccess() {
+	response, err := Decode(s.base64sample)
 
 	s.Nil(err)
-	s.Len(samlresp.Assertion.AttributeStatement.Attributes, 13)
+	s.Len(response.Assertion.AttributeStatement.Attributes, 13)
 }
 
 func (s *TestSuite) TestGetAWSRoles() {
-	samlresp, _ := decodeSAMLResponse(s.base64sample)
-	roles, err := samlresp.getAWSRoles()
+	response, _ := Decode(s.base64sample)
+	roles, err := response.GetAWSRoles()
 
 	s.Nil(err)
 	s.Len(roles, 2)
 }
 
 func (s *TestSuite) TestFindPrincipalAndRoleToAssume() {
-	samlresp, _ := decodeSAMLResponse(s.base64sample)
-	principal, role, err := samlresp.findPrincipalAndRoleToAssume("firstrole")
+	response, _ := Decode(s.base64sample)
+	principal, role, err := response.FindPrincipalAndRoleToAssume("firstrole")
 
 	s.Nil(err)
 	s.Equal(principal, "arn:aws:iam::111111111111:saml-provider/Example")
@@ -54,8 +54,8 @@ func (s *TestSuite) TestFindPrincipalAndRoleToAssume() {
 }
 
 func (s *TestSuite) TestFindPrincipalAndRoleToAssumeNotFound() {
-	samlresp, _ := decodeSAMLResponse(s.base64sample)
-	principal, role, err := samlresp.findPrincipalAndRoleToAssume("other")
+	response, _ := Decode(s.base64sample)
+	principal, role, err := response.FindPrincipalAndRoleToAssume("other")
 
 	s.EqualError(err, "could not find AWS principal and role other")
 	s.Empty(principal)

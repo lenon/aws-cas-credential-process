@@ -37,21 +37,21 @@ type attributeValue struct {
 	Value   string   `xml:",chardata"`
 }
 
-func decodeSAMLResponse(samlResponseBase64 string) (*response, error) {
-	decodedStr, err := base64.StdEncoding.DecodeString(samlResponseBase64)
+func Decode(base64response string) (*response, error) {
+	decodedResponse, err := base64.StdEncoding.DecodeString(base64response)
 	if err != nil {
 		return nil, err
 	}
 
 	var resp response
-	if err := xml.Unmarshal(decodedStr, &resp); err != nil {
+	if err := xml.Unmarshal(decodedResponse, &resp); err != nil {
 		return nil, err
 	}
 
 	return &resp, nil
 }
 
-func (resp *response) getAWSRoles() ([][]*arn.ARN, error) {
+func (resp *response) GetAWSRoles() ([][]*arn.ARN, error) {
 	var arns [][]*arn.ARN
 
 	for _, attr := range resp.Assertion.AttributeStatement.Attributes {
@@ -76,8 +76,8 @@ func (resp *response) getAWSRoles() ([][]*arn.ARN, error) {
 	return arns, nil
 }
 
-func (r *response) findPrincipalAndRoleToAssume(roleName string) (string, string, error) {
-	roles, err := r.getAWSRoles()
+func (r *response) FindPrincipalAndRoleToAssume(roleName string) (string, string, error) {
+	roles, err := r.GetAWSRoles()
 	if err != nil {
 		return "", "", err
 	}
