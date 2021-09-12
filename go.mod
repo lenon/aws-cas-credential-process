@@ -1,4 +1,4 @@
-module github.com/lenon/aws-cas-auth
+module github.com/lenon/aws-cas-credential-process
 
 go 1.17
 
