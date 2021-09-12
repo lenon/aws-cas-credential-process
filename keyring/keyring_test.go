@@ -46,7 +46,7 @@ func (s *TestSuite) TestGetError() {
 	username, err := s.keyring.Get("username")
 
 	s.Empty(username)
-	s.EqualError(err, "username not found")
+	s.EqualError(err, "key not found: username")
 	s.backendMock.AssertExpectations(s.T())
 }
 
@@ -66,7 +66,7 @@ func (s *TestSuite) TestGetWithinContextError() {
 	value, err := s.keyring.GetWithinContext("MyRole", "AccessKeyId")
 
 	s.Empty(value)
-	s.EqualError(err, "myrole-AccessKeyId not found")
+	s.EqualError(err, "key not found: myrole-AccessKeyId")
 	s.backendMock.AssertExpectations(s.T())
 }
 

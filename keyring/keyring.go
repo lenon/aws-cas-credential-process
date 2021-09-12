@@ -1,7 +1,6 @@
 package keyring
 
 import (
-	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -29,7 +28,7 @@ func (k *Keyring) Get(key string) (string, error) {
 	value, err := k.backend.Get(serviceKey, key)
 
 	if err != nil {
-		return "", errors.New(fmt.Sprintf("%s not found", key))
+		return "", fmt.Errorf("key not found: %s", key)
 	}
 
 	return value, nil
