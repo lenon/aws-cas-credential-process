@@ -5,8 +5,6 @@ import (
 	"encoding/xml"
 	"errors"
 	"fmt"
-
-	"github.com/aws/aws-sdk-go/aws/arn"
 )
 
 const awsRoleAttrName = "https://aws.amazon.com/SAML/Attributes/Role"
@@ -51,21 +49,23 @@ func Decode(base64response string) (*response, error) {
 	return &resp, nil
 }
 
-func (resp *response) GetAWSRoles() ([][]*arn.ARN, error) {
-	var arns [][]*arn.ARN
+func (resp *response) GetAWSRoles() ([]*role, error) {
+	var arns []*role
 
 	for _, attr := range resp.Assertion.AttributeStatement.Attributes {
+		// There are multiple attributes in the response. We are only interested
+		// in the one that contains a list of roles that the user can assume.
 		if attr.Name != awsRoleAttrName {
 			continue
 		}
 
-		for _, role := range attr.AttributeValues {
-			principal, roleToAssume, err := rolesFromSAMLAttr(role.Value)
+		for _, roleAttr := range attr.AttributeValues {
+			role, err := roleFromAttr(roleAttr.Value)
 			if err != nil {
 				return nil, err
 			}
 
-			arns = append(arns, []*arn.ARN{principal, roleToAssume})
+			arns = append(arns, role)
 		}
 	}
 
@@ -76,20 +76,17 @@ func (resp *response) GetAWSRoles() ([][]*arn.ARN, error) {
 	return arns, nil
 }
 
-func (r *response) FindPrincipalAndRoleToAssume(roleName string) (string, string, error) {
+func (r *response) FindRole(roleARN string) (*role, error) {
 	roles, err := r.GetAWSRoles()
 	if err != nil {
-		return "", "", err
+		return nil, err
 	}
 
-	for _, value := range roles {
-		principal := value[0]
-		role := value[1]
-
-		if roleNameMatches(roleName, role) {
-			return principal.String(), role.String(), nil
+	for _, role := range roles {
+		if role.roleARN == roleARN {
+			return role, nil
 		}
 	}
 
-	return "", "", errors.New(fmt.Sprintf("could not find AWS principal and role %s", roleName))
+	return nil, fmt.Errorf("could not find role: %s", roleARN)
 }

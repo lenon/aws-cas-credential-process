@@ -39,20 +39,19 @@ func TestGetAWSRoles(t *testing.T) {
 	assert.Len(t, roles, 2)
 }
 
-func TestFindPrincipalAndRoleToAssume(t *testing.T) {
+func TestFindRole(t *testing.T) {
 	response, _ := Decode(base64Sample(t))
-	principal, role, err := response.FindPrincipalAndRoleToAssume("firstrole")
+	role, err := response.FindRole("arn:aws:iam::111111111111:role/FirstRole")
 
 	assert.Nil(t, err)
-	assert.Equal(t, principal, "arn:aws:iam::111111111111:saml-provider/Example")
-	assert.Equal(t, role, "arn:aws:iam::111111111111:role/FirstRole")
+	assert.Equal(t, role.principalARN, "arn:aws:iam::111111111111:saml-provider/Example")
+	assert.Equal(t, role.roleARN, "arn:aws:iam::111111111111:role/FirstRole")
 }
 
-func TestFindPrincipalAndRoleToAssumeNotFound(t *testing.T) {
+func TestFindRoleNotFound(t *testing.T) {
 	response, _ := Decode(base64Sample(t))
-	principal, role, err := response.FindPrincipalAndRoleToAssume("other")
+	role, err := response.FindRole("other")
 
-	assert.EqualError(t, err, "could not find AWS principal and role other")
-	assert.Empty(t, principal)
-	assert.Empty(t, role)
+	assert.EqualError(t, err, "could not find role: other")
+	assert.Nil(t, role)
 }
