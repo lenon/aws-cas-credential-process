@@ -8,8 +8,8 @@ import (
 )
 
 type role struct {
-	principalARN string
-	roleARN      string
+	PrincipalARN string
+	RoleARN      string
 }
 
 func roleFromAttr(roleAttr string) (*role, error) {
@@ -51,7 +51,7 @@ func roleFromAttr(roleAttr string) (*role, error) {
 	}
 
 	return &role{
-		roleARN:      roleARN,
-		principalARN: principalARN,
+		RoleARN:      roleARN,
+		PrincipalARN: principalARN,
 	}, nil
 }

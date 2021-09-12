@@ -83,7 +83,7 @@ func (r *response) FindRole(roleARN string) (*role, error) {
 	}
 
 	for _, role := range roles {
-		if role.roleARN == roleARN {
+		if role.RoleARN == roleARN {
 			return role, nil
 		}
 	}

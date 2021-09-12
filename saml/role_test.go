@@ -34,14 +34,14 @@ func TestRolesFromAttrValidARNs(t *testing.T) {
 	role, err := roleFromAttr("arn:aws:iam::111111111111:role/MyRole,arn:aws:iam::111111111111:saml-provider/Example")
 
 	assert.Nil(t, err)
-	assert.Equal(t, role.principalARN, "arn:aws:iam::111111111111:saml-provider/Example")
-	assert.Equal(t, role.roleARN, "arn:aws:iam::111111111111:role/MyRole")
+	assert.Equal(t, role.PrincipalARN, "arn:aws:iam::111111111111:saml-provider/Example")
+	assert.Equal(t, role.RoleARN, "arn:aws:iam::111111111111:role/MyRole")
 }
 
 func TestRolesFromAttrValidARNsReverse(t *testing.T) {
 	role, err := roleFromAttr("arn:aws:iam::111111111111:saml-provider/Example,arn:aws:iam::111111111111:role/MyRole")
 
 	assert.Nil(t, err)
-	assert.Equal(t, role.principalARN, "arn:aws:iam::111111111111:saml-provider/Example")
-	assert.Equal(t, role.roleARN, "arn:aws:iam::111111111111:role/MyRole")
+	assert.Equal(t, role.PrincipalARN, "arn:aws:iam::111111111111:saml-provider/Example")
+	assert.Equal(t, role.RoleARN, "arn:aws:iam::111111111111:role/MyRole")
 }

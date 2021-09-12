@@ -44,8 +44,8 @@ func TestFindRole(t *testing.T) {
 	role, err := response.FindRole("arn:aws:iam::111111111111:role/FirstRole")
 
 	assert.Nil(t, err)
-	assert.Equal(t, role.principalARN, "arn:aws:iam::111111111111:saml-provider/Example")
-	assert.Equal(t, role.roleARN, "arn:aws:iam::111111111111:role/FirstRole")
+	assert.Equal(t, role.PrincipalARN, "arn:aws:iam::111111111111:saml-provider/Example")
+	assert.Equal(t, role.RoleARN, "arn:aws:iam::111111111111:role/FirstRole")
 }
 
 func TestFindRoleNotFound(t *testing.T) {
