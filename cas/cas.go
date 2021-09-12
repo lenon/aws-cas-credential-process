@@ -46,6 +46,10 @@ func (c *CAS) Auth(username, password string) (string, error) {
 		return "", err
 	}
 
+	if resp.StatusCode != http.StatusOK {
+		return "", fmt.Errorf("authentication failure: HTTP %d", resp.StatusCode)
+	}
+
 	samlResponseBase64, err := getSAMLResponseFromHTML(resp.Body)
 	if err != nil {
 		return "", err

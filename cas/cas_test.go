@@ -44,7 +44,7 @@ func bodySample() *os.File {
 
 func TestAuthError(t *testing.T) {
 	httpmock, cas := buildCAS()
-	httpmock.On("Do", mock.AnythingOfType("*http.Request")).Return(nil, errors.New("something went wrong"))
+	httpmock.On("Do", mock.Anything).Return(nil, errors.New("something went wrong"))
 
 	_, err := cas.Auth("alice", "w0nd3rl4nd")
 
@@ -55,7 +55,7 @@ func TestAuthError(t *testing.T) {
 func TestAuthSuccess(t *testing.T) {
 	httpmock, cas := buildCAS()
 	httpresp := &http.Response{
-		StatusCode: 200,
+		StatusCode: http.StatusOK,
 		Body:       bodySample(),
 	}
 	reqMatcher := func(req *http.Request) bool {
@@ -70,5 +70,19 @@ func TestAuthSuccess(t *testing.T) {
 
 	assert.Nil(t, err)
 	assert.NotEmpty(t, resp)
+	httpmock.AssertExpectations(t)
+}
+
+func TestAuthUnauthorized(t *testing.T) {
+	httpmock, cas := buildCAS()
+	httpresp := &http.Response{
+		StatusCode: http.StatusUnauthorized,
+		Body:       bodySample(),
+	}
+	httpmock.On("Do", mock.Anything).Return(httpresp, nil)
+
+	_, err := cas.Auth("alice", "wr0ngp4ss")
+
+	assert.EqualError(t, err, "authentication failure: HTTP 401")
 	httpmock.AssertExpectations(t)
 }
