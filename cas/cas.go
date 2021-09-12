@@ -16,7 +16,7 @@ type CAS struct {
 	URL        string
 }
 
-func NewWithDefaults(url string) *CAS {
+func New(url string) *CAS {
 	return &CAS{
 		URL: url,
 		HTTPClient: &http.Client{

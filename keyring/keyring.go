@@ -20,7 +20,7 @@ type Keyring struct {
 	backend keyringBackend
 }
 
-func OpenWithDefaults() *Keyring {
+func Open() *Keyring {
 	return &Keyring{backend: &backend{}}
 }
 
