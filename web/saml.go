@@ -37,8 +37,8 @@ type samlAttributeValue struct {
 	Value   string   `xml:",chardata"`
 }
 
-func decodeSAMLFromBase64(base64str string) (*samlResponse, error) {
-	decodedStr, err := base64.StdEncoding.DecodeString(base64str)
+func decodeSAMLResponse(samlResponseBase64 string) (*samlResponse, error) {
+	decodedStr, err := base64.StdEncoding.DecodeString(samlResponseBase64)
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +60,7 @@ func (resp *samlResponse) getAWSRoles() ([][]*arn.ARN, error) {
 		}
 
 		for _, role := range attr.AttributeValues {
-			principal, roleToAssume, err := extractRolesFromSAMLAttr(role.Value)
+			principal, roleToAssume, err := rolesFromSAMLAttr(role.Value)
 			if err != nil {
 				return nil, err
 			}
@@ -70,7 +70,7 @@ func (resp *samlResponse) getAWSRoles() ([][]*arn.ARN, error) {
 	}
 
 	if len(arns) < 1 {
-		return nil, errors.New("expected to find at least 1 role in SAML response, found 0")
+		return nil, errors.New("expected to find at least one role in SAML response, found none")
 	}
 
 	return arns, nil
