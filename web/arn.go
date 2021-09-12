@@ -8,7 +8,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/arn"
 )
 
-func extractRolesFromSAMLAttr(principalAndRole string) (*arn.ARN, *arn.ARN, error) {
+func rolesFromSAMLAttr(principalAndRole string) (*arn.ARN, *arn.ARN, error) {
 	chunks := strings.Split(principalAndRole, ",")
 
 	if len(chunks) != 2 {

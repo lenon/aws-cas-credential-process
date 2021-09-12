@@ -7,22 +7,20 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestExtractRolesFromSAMLAttrInvalid(t *testing.T) {
-	_, _, err := extractRolesFromSAMLAttr("foobar")
+func TestRolesFromSAMLAttrInvalid(t *testing.T) {
+	_, _, err := rolesFromSAMLAttr("foobar")
 
-	assert.Error(t, err)
-	assert.Contains(t, err.Error(), "expected to find principal and role to assume, found foobar")
+	assert.EqualError(t, err, "expected to find principal and role to assume, found foobar")
 }
 
-func TestExtractRolesFromSAMLAttrInvalidARNs(t *testing.T) {
-	_, _, err := extractRolesFromSAMLAttr("foobar,barbaz")
+func TestRolesFromSAMLAttrInvalidARNs(t *testing.T) {
+	_, _, err := rolesFromSAMLAttr("foobar,barbaz")
 
-	assert.Error(t, err)
-	assert.Contains(t, err.Error(), "arn: invalid prefix")
+	assert.EqualError(t, err, "arn: invalid prefix")
 }
 
-func TestExtractRolesFromSAMLAttrValidARNs(t *testing.T) {
-	principal, role, err := extractRolesFromSAMLAttr("arn:aws:iam::111111111111:saml-provider/Example,arn:aws:iam::111111111111:role/FirstRole")
+func TestRolesFromSAMLAttrValidARNs(t *testing.T) {
+	principal, role, err := rolesFromSAMLAttr("arn:aws:iam::111111111111:saml-provider/Example,arn:aws:iam::111111111111:role/FirstRole")
 
 	assert.Nil(t, err)
 	assert.Equal(t, principal.String(), "arn:aws:iam::111111111111:saml-provider/Example")
