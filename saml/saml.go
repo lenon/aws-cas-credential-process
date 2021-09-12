@@ -49,7 +49,7 @@ func Decode(base64response string) (*response, error) {
 	return &resp, nil
 }
 
-func (resp *response) GetAWSRoles() ([]*role, error) {
+func (resp *response) GetRoles() ([]*role, error) {
 	var arns []*role
 
 	for _, attr := range resp.Assertion.AttributeStatement.Attributes {
@@ -77,7 +77,7 @@ func (resp *response) GetAWSRoles() ([]*role, error) {
 }
 
 func (r *response) FindRole(roleARN string) (*role, error) {
-	roles, err := r.GetAWSRoles()
+	roles, err := r.GetRoles()
 	if err != nil {
 		return nil, err
 	}

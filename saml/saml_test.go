@@ -33,7 +33,7 @@ func TestDecodeSuccess(t *testing.T) {
 
 func TestGetAWSRoles(t *testing.T) {
 	response, _ := Decode(base64Sample(t))
-	roles, err := response.GetAWSRoles()
+	roles, err := response.GetRoles()
 
 	assert.Nil(t, err)
 	assert.Len(t, roles, 2)
