@@ -11,39 +11,39 @@ import (
 
 const awsRoleAttrName = "https://aws.amazon.com/SAML/Attributes/Role"
 
-type samlResponse struct {
-	XMLName   xml.Name       `xml:"urn:oasis:names:tc:SAML:2.0:protocol Response"`
-	Assertion *samlAssertion `xml:"Assertion"`
+type response struct {
+	XMLName   xml.Name   `xml:"urn:oasis:names:tc:SAML:2.0:protocol Response"`
+	Assertion *assertion `xml:"Assertion"`
 }
 
-type samlAssertion struct {
-	XMLName            xml.Name                `xml:"urn:oasis:names:tc:SAML:2.0:assertion Assertion"`
-	AttributeStatement *samlAttributeStatement `xml:"AttributeStatement"`
+type assertion struct {
+	XMLName            xml.Name            `xml:"urn:oasis:names:tc:SAML:2.0:assertion Assertion"`
+	AttributeStatement *attributeStatement `xml:"AttributeStatement"`
 }
 
-type samlAttributeStatement struct {
-	XMLName    xml.Name        `xml:"urn:oasis:names:tc:SAML:2.0:assertion AttributeStatement"`
-	Attributes []samlAttribute `xml:"Attribute"`
+type attributeStatement struct {
+	XMLName    xml.Name    `xml:"urn:oasis:names:tc:SAML:2.0:assertion AttributeStatement"`
+	Attributes []attribute `xml:"Attribute"`
 }
 
-type samlAttribute struct {
-	XMLName         xml.Name             `xml:"urn:oasis:names:tc:SAML:2.0:assertion Attribute"`
-	Name            string               `xml:"Name,attr"`
-	AttributeValues []samlAttributeValue `xml:"AttributeValue"`
+type attribute struct {
+	XMLName         xml.Name         `xml:"urn:oasis:names:tc:SAML:2.0:assertion Attribute"`
+	Name            string           `xml:"Name,attr"`
+	AttributeValues []attributeValue `xml:"AttributeValue"`
 }
 
-type samlAttributeValue struct {
+type attributeValue struct {
 	XMLName xml.Name `xml:"AttributeValue"`
 	Value   string   `xml:",chardata"`
 }
 
-func decodeSAMLResponse(samlResponseBase64 string) (*samlResponse, error) {
+func decodeSAMLResponse(samlResponseBase64 string) (*response, error) {
 	decodedStr, err := base64.StdEncoding.DecodeString(samlResponseBase64)
 	if err != nil {
 		return nil, err
 	}
 
-	var resp samlResponse
+	var resp response
 	if err := xml.Unmarshal(decodedStr, &resp); err != nil {
 		return nil, err
 	}
@@ -51,7 +51,7 @@ func decodeSAMLResponse(samlResponseBase64 string) (*samlResponse, error) {
 	return &resp, nil
 }
 
-func (resp *samlResponse) getAWSRoles() ([][]*arn.ARN, error) {
+func (resp *response) getAWSRoles() ([][]*arn.ARN, error) {
 	var arns [][]*arn.ARN
 
 	for _, attr := range resp.Assertion.AttributeStatement.Attributes {
@@ -76,7 +76,7 @@ func (resp *samlResponse) getAWSRoles() ([][]*arn.ARN, error) {
 	return arns, nil
 }
 
-func (r *samlResponse) findPrincipalAndRoleToAssume(roleName string) (string, string, error) {
+func (r *response) findPrincipalAndRoleToAssume(roleName string) (string, string, error) {
 	roles, err := r.getAWSRoles()
 	if err != nil {
 		return "", "", err
