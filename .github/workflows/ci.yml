@@ -1,6 +1,8 @@
 name: Lint and test
 on:
   push:
+    branches:
+      - '**'
     # tags are used for releases, no need to run tests against them as they
     # should be created only when the build is green
     tags-ignore:
