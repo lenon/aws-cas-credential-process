@@ -3,7 +3,7 @@ module github.com/lenon/aws-cas-credential-process
 go 1.17
 
 require (
-	github.com/antchfx/htmlquery v1.2.3
+	github.com/antchfx/htmlquery v1.2.4
 	github.com/aws/aws-sdk-go v1.40.45
 	github.com/spf13/cobra v1.2.1
 	github.com/stretchr/testify v1.7.0
