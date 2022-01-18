@@ -1,8 +1,8 @@
 # aws-cas-credential-process
 
 `aws-cas-credential-process` is a [credential process][cred-proc] for AWS CLI.
-It can be used to authenticate through any CAS SSO that is configured as SAML
-2.0 identity provider on AWS.
+It can be used to authenticate through any CAS SSO that is configured as [SAML
+2.0 identity provider][cas-saml] on AWS.
 
 How the process works:
 
@@ -18,7 +18,10 @@ How the process works:
 Credentials are stored in your system's keyring (Keychain on macOS, GNOME
 Keyring on Linux).
 
-Important: this project has been tested and works for CAS instances configured
+Note (1): this project has been tested with AWS CLI v2. It may work with v1,
+though.
+
+Note (2): this project has been tested and works for CAS instances configured
 with [`mfa-duo`][mfa-duo] MFA provider.
 
 ## Installation
@@ -76,3 +79,4 @@ You may need to approve your MFA login now.
 [mfa-duo]:https://apereo.github.io/cas/5.0.x/installation/Configuring-Multifactor-Authentication.html#duo-security
 [releases]:https://github.com/lenon/aws-cas-credential-process/releases
 [cred-proc]:https://awscli.amazonaws.com/v2/documentation/api/latest/topic/config-vars.html#sourcing-credentials-from-external-processes
+[cas-saml]:https://apereo.github.io/cas/6.4.x/authentication/Configuring-SAML2-Authentication.html
