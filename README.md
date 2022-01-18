@@ -75,4 +75,4 @@ You may need to approve your MFA login now.
 
 [mfa-duo]:https://apereo.github.io/cas/5.0.x/installation/Configuring-Multifactor-Authentication.html#duo-security
 [releases]:https://github.com/lenon/aws-cas-credential-process/releases
-[cred-proc]:https://docs.aws.amazon.com/cli/latest/topic/config-vars.html#sourcing-credentials-from-external-processes
+[cred-proc]:https://awscli.amazonaws.com/v2/documentation/api/latest/topic/config-vars.html#sourcing-credentials-from-external-processes
