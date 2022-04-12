@@ -6,7 +6,7 @@ require (
 	github.com/antchfx/htmlquery v1.2.4
 	github.com/aws/aws-sdk-go v1.43.37
 	github.com/spf13/cobra v1.3.0
-	github.com/stretchr/testify v1.7.0
+	github.com/stretchr/testify v1.7.1
 	github.com/zalando/go-keyring v0.1.1
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5
 )
