@@ -30,10 +30,13 @@ Download the latest version:
 
 ```
 # macOS (Intel)
-curl -sL https://github.com/lenon/aws-cas-credential-process/releases/latest/download/aws-cas-credential-process-darwin-amd64.tar.gz | tar zxf -
+curl -fsSL https://github.com/lenon/aws-cas-credential-process/releases/latest/download/aws-cas-credential-process-darwin-amd64.tar.gz | tar zxf -
+
+# macOS (ARM)
+curl -fsSL https://github.com/lenon/aws-cas-credential-process/releases/latest/download/aws-cas-credential-process-darwin-arm64.tar.gz | tar zxf -
 
 # Linux
-curl -sL https://github.com/lenon/aws-cas-credential-process/releases/latest/download/aws-cas-credential-process-linux-amd64.tar.gz | tar zxf -
+curl -fsSL https://github.com/lenon/aws-cas-credential-process/releases/latest/download/aws-cas-credential-process-linux-amd64.tar.gz | tar zxf -
 ```
 
 See the complete list of precompiled binaries [here][releases].
