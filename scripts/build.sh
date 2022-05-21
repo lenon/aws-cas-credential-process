@@ -8,7 +8,7 @@ ldflags="
 
 bin_ext=""
 if [ "$GOOS" == "windows" ]; then
-    bin_ext=".exe"
+  bin_ext=".exe"
 fi
 
 output="dist/aws-cas-credential-process-$GOOS-$GOARCH$bin_ext"
