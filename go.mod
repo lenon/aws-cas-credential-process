@@ -1,6 +1,6 @@
 module github.com/lenon/aws-cas-credential-process
 
-go 1.17
+go 1.18
 
 require (
 	github.com/antchfx/htmlquery v1.2.4
