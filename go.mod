@@ -3,7 +3,7 @@ module github.com/lenon/aws-cas-credential-process
 go 1.18
 
 require (
-	github.com/antchfx/htmlquery v1.2.4
+	github.com/antchfx/htmlquery v1.2.5
 	github.com/aws/aws-sdk-go v1.44.24
 	github.com/spf13/cobra v1.4.0
 	github.com/stretchr/testify v1.7.1
@@ -13,7 +13,7 @@ require (
 
 require (
 	github.com/alessio/shellescape v1.4.1 // indirect
-	github.com/antchfx/xpath v1.2.0 // indirect
+	github.com/antchfx/xpath v1.2.1 // indirect
 	github.com/danieljoos/wincred v1.1.2 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/godbus/dbus/v5 v5.0.6 // indirect
