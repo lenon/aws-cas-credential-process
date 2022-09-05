@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/antchfx/htmlquery v1.2.5
-	github.com/aws/aws-sdk-go v1.44.71
+	github.com/aws/aws-sdk-go v1.44.91
 	github.com/spf13/cobra v1.5.0
 	github.com/stretchr/testify v1.8.0
 	github.com/zalando/go-keyring v0.2.1
